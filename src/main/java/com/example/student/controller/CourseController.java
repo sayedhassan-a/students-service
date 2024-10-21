@@ -1,11 +1,9 @@
 package com.example.student.controller;
 
 import com.example.student.dto.StudentDTO;
+import com.example.student.repository.StudentRepository;
 import com.example.student.service.StudentService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -13,13 +11,15 @@ import java.util.List;
 @RequestMapping("courses")
 public class CourseController {
     private final StudentService studentService;
-    public CourseController(StudentService studentService) {
+    private final StudentRepository studentRepository;
+    public CourseController(StudentService studentService, StudentRepository studentRepository) {
         this.studentService = studentService;
+        this.studentRepository = studentRepository;
     }
 
     @GetMapping("/{id}/students")
-    public List<StudentDTO> getStudents(Integer courseId) {
-        return studentService.getStudentsByCourseId(courseId);
+    public List<StudentDTO> getStudents(@PathVariable Integer id) {
+        return studentService.getStudentsByCourseId(id);
     }
 
 
